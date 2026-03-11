@@ -8,16 +8,16 @@ const userSchema = new Schema(
             type: String,
             required: true,
             unique: true,
-            loercase: true,
+            lowercase: true, // popravljeno
             trim: true,
             minLength: 1,
             maxLength: 30,
         },
-        passsword: {
+        password: { // popravljeno
             type: String,
             required: true,
-            minLength: 6, 
-            maxLength: 50,
+            minLength: 6,
+            maxLength: 100, // povečaj, ker hash zavzame več prostora
         },
         email: {
             type: String,
@@ -25,14 +25,14 @@ const userSchema = new Schema(
             unique: true,
             lowercase: true,
             trim: true,
-            minLength: 10,
+            minLength: 5, // zmanjšano za krajše emaile
             maxLength: 100,
-        }
-    },
-    {
-        timestamps: true,
-    }
-)
+        },
+    }, {
+    timestamps: true,
+}
+);
+
 
 //before saving the user, hash the password
 userSchema.pre('save', async function (next) {

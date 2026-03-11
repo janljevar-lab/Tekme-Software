@@ -1,12 +1,13 @@
-import { User } from '../models/user.model.js';
+import { User } from '../models/tekma.model.js';
 
 const registerUser = async (req, res) => {
     try{
-        const { name, email, password } = req.body;
+        const { name, username, email, password } = req.body;
+        const userName = username || name;
 
         //basic validation
 
-        if (!name || !email || !password) {
+        if (!userName || !email || !password) {
             return res.status(400).json({ message: 'Please provide all required fields' });
         }
 
@@ -19,17 +20,16 @@ const registerUser = async (req, res) => {
 
         //create new user
         const user = await User.create({
-            name,
+            username: userName,
             email: email.toLowerCase(),
-            password,
-            loggedIn: false
+            password
         });
         return res.status(201).json({ 
             message: 'User created successfully',
             user: {
                  _id: user._id, 
                  email: user.email, 
-                 username: user.name 
+                 username: user.username 
                 }
         });
     } catch (error) {
@@ -59,7 +59,7 @@ const loginUser = async (req, res) => {
             user: {
                 _id: user._id,
                 email: user.email,
-                username: user.name
+                username: user.username
             }
         });
 

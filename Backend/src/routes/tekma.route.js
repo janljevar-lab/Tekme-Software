@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser, loginUser, logoutUser } from "../controllers/user.controller.js";
+import { registerUser, loginUser, logoutUser } from "../controllers/tekma.controller.js";
 
 const router = Router();
 

@@ -1,1 +1,1 @@
-export const DB_NAME = 'Tutorial';
+export const DB_NAME = 'my_database';
