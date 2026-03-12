@@ -29,6 +29,10 @@ const igralciSchema = new Schema(
             minLength: 1,
             maxLength: 50,
         },
+        točke: {
+            type: Number,
+            default: 0,
+        },
     },
     { timestamps: true }
 );

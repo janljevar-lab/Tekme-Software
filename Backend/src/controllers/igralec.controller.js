@@ -27,3 +27,65 @@ export const igralciSchema = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 }
+
+export const getAllIgralci = async (req, res) => {
+    try {
+        const igralci = await Igralec.find();
+        return res.status(200).json(igralci);
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }   
+}
+
+export const getIgralecById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const igralec = await Igralec.findOne({ idNumber: id });
+        if (!igralec) {
+            return res.status(404).json({ message: 'Player not found' });
+        }
+        return res.status(200).json(igralec);
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+}
+
+export const updateIgralec = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { ime, priimek, datumRojstva, drzava } = req.body;
+        const igralec = await Igralec.findOneAndUpdate(
+            { idNumber: id },
+            { ime, priimek, datumRojstva, drzava },
+            { new: true }
+        );
+        if (!igralec) {
+            return res.status(404).json({ message: 'Player not found' });
+        }
+        return res.status(200).json({ message: 'Igralec updated successfully', player: igralec });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }       
+}
+
+export const deleteIgralec = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const igralec = await Igralec.findOneAndDelete({ idNumber: id });
+        if (!igralec) {
+            return res.status(404).json({ message: 'Player not found' });
+        }
+        return res.status(200).json({ message: 'Igralec deleted successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error', error: error.message });
+    } 
+}
+
+export const deleteAllIgralci = async (req, res) => {
+    try {
+        await Igralec.deleteMany({});
+        return res.status(200).json({ message: 'All players deleted successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+}
