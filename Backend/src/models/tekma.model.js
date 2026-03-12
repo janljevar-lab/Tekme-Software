@@ -1,49 +1,44 @@
 import mongoose, { Schema } from "mongoose";
-import bcrypt from "bcrypt";
+import { Igralec } from "./igralec.model.js";
 
-const userSchema = new Schema(
+const tekmaSchema = new Schema(
     {
-        username: {
-            type: String,
-            required: true,
-            unique: true,
-            lowercase: true, // popravljeno
-            trim: true,
-            minLength: 1,
-            maxLength: 30,
+        datum: { type: Date, required: false, default: Date.now },
+        rezultat: { type: String, required: true },
+        igralec1: {
+            idNumber: { type: Number },
+            ime: { type: String, required: true },
+            priimek: { type: String, required: true },
+            datumRojstva: { type: Date },
+            drzava: { type: String }
         },
-        password: { // popravljeno
-            type: String,
-            required: true,
-            minLength: 6,
-            maxLength: 100, // povečaj, ker hash zavzame več prostora
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-            lowercase: true,
-            trim: true,
-            minLength: 5, // zmanjšano za krajše emaile
-            maxLength: 100,
-        },
-    }, {
-    timestamps: true,
-}
+        igralec2: {
+            idNumber: { type: Number },
+            ime: { type: String, required: true },
+            priimek: { type: String, required: true },
+            datumRojstva: { type: Date },
+            drzava: { type: String }
+        }
+    },
+    { timestamps: true }
 );
 
-
-//before saving the user, hash the password
-userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
-    this.password = await bcrypt.hash(this.password, 10);
-
-    next();
+// poišče ostale podatke playerja na podlagi imena in priimka, če idNumber ni podan
+tekmaSchema.pre("save", async function() {
+    const igralci = ["igralec1", "igralec2"];
+    for (const polje of igralci) {
+        const player = this[polje];
+        if (!player.idNumber) {
+            const fullPlayer = await Igralec.findOne({ ime: player.ime, priimek: player.priimek });
+            if (fullPlayer) {
+                player.idNumber = fullPlayer.idNumber;
+                player.datumRojstva = fullPlayer.datumRojstva;
+                player.drzava = fullPlayer.drzava;
+            } else {
+                throw new Error(`Igralec ${player.ime} ${player.priimek} ne obstaja v bazi`);
+            }
+        }
+    }
 });
 
-//method to compare password
-userSchema.methods.comparePassword = async function (candidatePassword) {
-    return await bcrypt.compare(candidatePassword, this.password);
-}
-
-export const User = mongoose.model('User', userSchema);
+export const Tekma = mongoose.model("Tekma", tekmaSchema);

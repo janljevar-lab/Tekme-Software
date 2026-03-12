@@ -1,96 +1,86 @@
-import { User } from '../models/tekma.model.js';
+import { Tekma } from '../models/tekma.model.js';
 
-const registerUser = async (req, res) => {
-    try{
-        const { name, username, email, password } = req.body;
-        const userName = username || name;
+export const createTekma = async (req, res) => {
+    try {
+        const { igralec1, igralec2, rezultat } = req.body;
 
-        //basic validation
-
-        if (!userName || !email || !password) {
+        if (!igralec1 || !igralec2 || !rezultat) {
             return res.status(400).json({ message: 'Please provide all required fields' });
         }
 
-        //check if user already exists
+        const tekma = new Tekma({ igralec1, igralec2, rezultat });
+        await tekma.save();
 
-        const existing = await User.findOne({ email: email.toLowerCase() });
-        if (existing) {
-            return res.status(400).json({ message: 'User already exists' });
-        }
-
-        //create new user
-        const user = await User.create({
-            username: userName,
-            email: email.toLowerCase(),
-            password
-        });
-        return res.status(201).json({ 
-            message: 'User created successfully',
-            user: {
-                 _id: user._id, 
-                 email: user.email, 
-                 username: user.username 
-                }
-        });
+        return res.status(201).json({ message: 'Tekma created successfully', data: tekma });
     } catch (error) {
         return res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 }
 
-
-const loginUser = async (req, res) => {
+export const getAllTekme = async (req, res) => {
     try {
-
-        //chek if user exists
-        const { email, password } = req.body;
-
-        const user = await User.findOne({ email: email.toLowerCase() });
-
-        if (!user) {
-            return res.status(400).json({ message: 'Invalid credentials' });
-        }
-
-        //check password
-        const isMatch = await user.comparePassword(password);
-        if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-
-        res.status(200).json({
-            message: 'Login successful',
-            user: {
-                _id: user._id,
-                email: user.email,
-                username: user.username
-            }
-        });
-
-
-
+        const tekme = await Tekma.find();
+        return res.status(200).json(tekme);
     } catch (error) {
         return res.status(500).json({ message: 'Internal server error', error: error.message });
-    }
+    }   
 }
 
-const logoutUser = async (req, res) => {
+export const getByPlayer = async (req, res) => {
     try {
-        const { email } = req.body;
-
-        const user = await User.findOne({ email: email.toLowerCase() });
-        if (!user) {
-            return res.status(404).json({ message: 'user not found' });
-        }
-
-        
-        return res.status(200).json({ message: 'Logout successful' });
-
+        const { playerId } = req.params;
+        const tekme = await Tekma.find({
+            $or: [
+                { 'igralec1.idNumber': playerId },
+                { 'igralec2.idNumber': playerId }
+            ]
+        });
+        return res.status(200).json(tekme);
     } catch (error) {
-        
         return res.status(500).json({ message: 'Internal server error', error: error.message });
-    
     }
 }
 
-export {
-     registerUser, 
-     loginUser,
-     logoutUser
-    };
+export const deleteTekma = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const tekma = await Tekma.findByIdAndDelete(id);
+        if (!tekma) {
+            return res.status(404).json({ message: 'Tekma not found' });
+        }
+        return res.status(200).json({ message: 'Tekma deleted successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+}
+
+export const updateTekma = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { igralec1, igralec2, rezultat } = req.body;
+        const tekma = await Tekma.findByIdAndUpdate(
+            id,
+            { igralec1, igralec2, rezultat },
+            { new: true }
+        );
+        if (!tekma) {
+            return res.status(404).json({ message: 'Tekma not found' });
+        }
+        return res.status(200).json({ message: 'Tekma updated successfully', data: tekma });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+}
+
+export const deleteAllTekma = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const tekma = await Tekma.findByIdAndDelete(id);
+        if (!tekma) {
+            return res.status(404).json({ message: 'Tekma not found' });
+        }
+        return res.status(200).json({ message: 'Tekma deleted successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+}

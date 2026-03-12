@@ -13,6 +13,6 @@ app.use('/api/v1/tekme', tekmeRouter);
 app.use('/api/v1/igralci', igralciRouter);
 app.use('/api/v1/rezultati', rezultatiRouter);
 
-//exemple route http://localhost:5000/api/v1/users/register
+//exemple route http://localhost:6380/api/v1/igralci/igralec/1
 
 export default app;
