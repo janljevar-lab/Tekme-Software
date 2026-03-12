@@ -53,20 +53,36 @@ export const getIgralecById = async (req, res) => {
 export const updateIgralec = async (req, res) => {
     try {
         const { id } = req.params;
-        const { ime, priimek, datumRojstva, drzava } = req.body;
+        const { ime, priimek, datumRojstva, drzava, točke } = req.body;
+
         const igralec = await Igralec.findOneAndUpdate(
             { idNumber: id },
-            { ime, priimek, datumRojstva, drzava },
+            {
+                ime,
+                priimek,
+                datumRojstva,
+                drzava,
+                ...(točke != null && { $inc: { točke: točke } })
+            },
             { new: true }
         );
+
         if (!igralec) {
-            return res.status(404).json({ message: 'Player not found' });
+            return res.status(404).json({ message: "Player not found" });
         }
-        return res.status(200).json({ message: 'Igralec updated successfully', player: igralec });
+
+        return res.status(200).json({
+            message: "Player updated successfully",
+            player: igralec
+        });
+
     } catch (error) {
-        return res.status(500).json({ message: 'Internal server error', error: error.message });
-    }       
-}
+        return res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+};
 
 export const deleteIgralec = async (req, res) => {
     try {
