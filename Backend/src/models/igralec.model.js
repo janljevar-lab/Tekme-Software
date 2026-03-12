@@ -1,8 +1,9 @@
 import mongoose, { Schema } from "mongoose";
-import bcrypt from "bcrypt";
+import { Counter } from "./counter.model.js"; // import counter
 
 const igralciSchema = new Schema(
     {
+        idNumber: { type: Number, unique: true }, // auto-increment ID
         ime: {
             type: String,
             required: true,
@@ -28,10 +29,17 @@ const igralciSchema = new Schema(
             minLength: 1,
             maxLength: 50,
         },
-    }, {
-    timestamps: true,
-}
+    },
+    { timestamps: true }
 );
 
-
-export const Igralec = mongoose.model('Igralec', igralciSchema);
+// pre-save hook za auto-increment
+igralciSchema.pre("save", async function() {
+    const counter = await Counter.findByIdAndUpdate(
+        { _id: "playerId" },
+        { $inc: { seq: 1 } },
+        { new: true, upsert: true }
+    );
+    this.idNumber = counter.seq;
+});
+export const Igralec = mongoose.model("Igralec", igralciSchema);
