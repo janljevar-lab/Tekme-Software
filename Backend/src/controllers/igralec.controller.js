@@ -89,3 +89,22 @@ export const deleteAllIgralci = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 }
+
+
+
+// Dodajanje dodatnih točk k točkam
+export const addTočke = async (req, res) => {
+    try {
+        const { playerId } = req.params;
+        const { dodatneTočke } = req.body;
+        const igralec = await Igralec.findOne({ idNumber: playerId });
+        if (!igralec) {
+            return res.status(404).json({ message: 'Igralec not found' });
+        }
+        igralec.točke += dodatneTočke;
+        await igralec.save();
+        return res.status(200).json({ message: 'Points added successfully', data: igralec });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+}

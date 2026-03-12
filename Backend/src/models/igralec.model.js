@@ -1,9 +1,9 @@
 import mongoose, { Schema } from "mongoose";
-import { Counter } from "./counter.model.js"; // import counter
+import { Counter } from "./counter.model.js";
 
 const igralciSchema = new Schema(
     {
-        idNumber: { type: Number, unique: true }, // auto-increment ID
+        idNumber: { type: Number, unique: true },
         ime: {
             type: String,
             required: true,

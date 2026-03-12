@@ -5,7 +5,8 @@ import {
     getAllIgralci, 
     getIgralecById, 
     deleteIgralec, 
-    deleteAllIgralci
+    deleteAllIgralci,
+    addTočke
  }
   from "../controllers/igralec.controller.js";
 
@@ -17,4 +18,5 @@ router.route('/igralci/:id').delete(deleteIgralec);
 router.route('/igralci').get(getAllIgralci);
 router.route('/igralci/:id').get(getIgralecById);
 router.route('/igralci').delete(deleteAllIgralci);
+router.route('/igralci/:id').put(addTočke);
 export default router;

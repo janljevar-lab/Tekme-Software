@@ -5,7 +5,7 @@ import {
      getByPlayer, 
      deleteAllTekma, 
      deleteTekma, 
-     updateTekma  
+     updateTekma,
     } from "../controllers/tekma.controller.js";
 
 const router = Router();
