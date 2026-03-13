@@ -1,32 +1,27 @@
 <template>
   <div>
-
     <h2>Seznam igralcev</h2>
-
     <ul>
-        <li v-for="item in igralci" :key="item.idNumber" @click="odstraniIgralca(item.idNumber)" style="cursor: pointer;">
-
-            {{ item.ime }} {{ item.priimek }}
-
-        </li>
+      <li 
+    v-for="Igralec in igralci" 
+    :key="Igralec.idNumber" 
+    @click="odstraniIgralca(Igralec.idNumber)"
+    style="cursor: pointer;"
+    >
+        {{ Igralec.ime }} {{ Igralec.priimek }}
+      </li>
     </ul>
-    
   </div>
 </template>
 
-
 <script lang="ts">
-
 import { defineComponent, ref, onMounted } from "vue";
 import axios from "axios";
 
-
 export default defineComponent({
   name: "Seznam",
-
   setup() {
     const igralci = ref<Array<{ ime: string; priimek: string; idNumber: string }>>([]);
-
 
     const naloziIgralce = async () => {
       try {
@@ -37,11 +32,10 @@ export default defineComponent({
       }
     };
 
-
     const odstraniIgralca = async (idNumber: string) => {
       try {
         // Pošlji request na backend za trajno brisanje
-        await axios.delete(`http://localhost:6380/api/v1/igralci/${idNumber}`);
+        await axios.delete(`http://localhost:6380/api/v1/igralci/${Igralec.idNumber}`);
         
         // Odstrani iz frontend seznama
         igralci.value = igralci.value.filter(i => i.idNumber !== idNumber);
@@ -50,11 +44,9 @@ export default defineComponent({
       }
     };
 
-
     onMounted(() => {
       naloziIgralce();
     });
-
 
     return {
       igralci,
@@ -62,10 +54,21 @@ export default defineComponent({
     };
   },
 });
-
 </script>
 
-
 <style scoped>
+ul {
+  list-style: none;
+  padding: 0;
+}
 
+li {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+li:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
 </style>
