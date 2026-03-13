@@ -87,7 +87,7 @@ export const updateIgralec = async (req, res) => {
 export const deleteIgralec = async (req, res) => {
     try {
         const { id } = req.params;
-        const igralec = await Igralec.findOneAndDelete({ idNumber: id });
+        const igralec = await Igralec.findOneAndDelete({ _id: id });
         if (!igralec) {
             return res.status(404).json({ message: 'Player not found' });
         }
