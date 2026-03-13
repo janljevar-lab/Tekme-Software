@@ -1,38 +1,25 @@
 <template>
   <div>
-    <h2>Seznam igralcev</h2>
 
-    <ul>
-      <li
-        v-for="Igralec in igralci"
-        :key="Igralec._id"
-        @click="izberiIgralca(Igralec._id)"
-        :class="{selected: izbranId === Igralec._id}"
-      >
-        {{ Igralec.ime }} {{ Igralec.priimek }}
-      </li>
-    </ul>
+    <Dodajanje @osvezi="naloziIgralce" />
 
-    <button @click="izbrisiIgralca">
-      Izbriši izbranega igralca
-    </button>
+    <hr>
 
-    <p>
-      Izbran ID: {{ izbranId }}
-    </p>
-
+    <Seznam :igralci="igralci" @osvezi="naloziIgralce" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
+import Seznam from "./Igralci/Seznam.vue";
+import Dodajanje from "./Igralci/Dodajanje.vue";
 import axios from "axios";
 
 export default defineComponent({
   name: "Igralci",
+  components: { Seznam, Dodajanje },
   setup() {
     const igralci = ref<any[]>([]);
-    const izbranId = ref<any>(0);
 
     const naloziIgralce = async () => {
       try {
@@ -43,28 +30,9 @@ export default defineComponent({
       }
     };
 
-    const izberiIgralca = (id:any) => {
-      izbranId.value = izbranId.value === id ? 0 : id;
-    };
-
-    const izbrisiIgralca = async () => {
-      if(izbranId.value === 0){
-        alert("Najprej izberi igralca");
-        return;
-      }
-      try {
-        const link = `http://localhost:6380/api/v1/igralci/igralci/${izbranId.value}`;
-        await axios.delete(link);
-        igralci.value = igralci.value.filter(i => i._id !== izbranId.value);
-        izbranId.value = 0;
-      } catch (err) {
-        console.error("Napaka pri brisanju:", err);
-      }
-    };
-
     onMounted(naloziIgralce);
 
-    return { igralci, izbranId, izberiIgralca, izbrisiIgralca };
+    return { igralci, naloziIgralce };
   }
 });
 </script>
