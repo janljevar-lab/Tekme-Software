@@ -1,30 +1,64 @@
 <template>
   <div id="app">
-    <h1>Športni site</h1>
 
-    <Dodajanje/>
+    <div class="menu">
+      <button 
+        :class="{active: activeKomponent === 'igr'}"
+        @click="izberiKomponent('igr')">
+        Igralci
+      </button>
 
-    <Seznam />
+      <button 
+        :class="{active: activeKomponent === 'tek'}"
+        @click="izberiKomponent('tek')">
+        Tekme
+      </button>
 
+      <button 
+        :class="{active: activeKomponent === 'stat'}"
+        @click="izberiKomponent('stat')">
+        Stats
+      </button>
+    </div>
 
+    <hr>
+
+    <component :is="aktivnaKomponenta" />
+    
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import Seznam from "./components/Seznam.vue";
-import Dodajanje from "./components/Dodajanje.vue";
+import { defineComponent, ref, computed } from "vue";
+import Igralci from "./components/Igralci.vue";
 
 export default defineComponent({
   name: "App",
-  components: {
-    Seznam,
-    Dodajanje,
+  components: { Igralci },
 
-  },
+  setup() {
+    
+    const activeKomponent = ref('igr');
+
+    const komponentMap: Record<string, any> = {
+      'igr': Igralci,
+    };
+
+    const izberiKomponent = (k: string) => {
+      activeKomponent.value = k;
+    };
+
+    const aktivnaKomponenta = computed(() => komponentMap[activeKomponent.value]);
+
+    return {
+      activeKomponent,
+      izberiKomponent,
+      aktivnaKomponenta
+    };
+  }
 });
 </script>
 
-<style>
+<style scoped>
 
 </style>
