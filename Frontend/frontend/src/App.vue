@@ -6,6 +6,7 @@
 
     <Seznam />
 
+
   </div>
 </template>
 
@@ -25,12 +26,5 @@ export default defineComponent({
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #444;
-  margin-top: 60px;
-}
+
 </style>

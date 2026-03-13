@@ -1,11 +1,15 @@
 <template>
   <div>
+
     <h2>Dodaj novega igralca</h2>
+
     <form @submit.prevent="dodajIgralca">
+
       <div>
         <label for="ime">Ime:</label>
         <input type="text" id="ime" v-model="ime" required />
       </div>
+
 
       <div>
         <label for="priimek">Priimek:</label>
@@ -16,10 +20,12 @@
     </form>
 
     <p v-if="sporocilo">{{ sporocilo }}</p>
+
   </div>
 </template>
 
 <script lang="ts">
+
 import { defineComponent, ref } from "vue";
 import axios from "axios";
 
@@ -58,30 +64,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-form {
-  margin: 20px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-div {
-  margin-bottom: 10px;
-}
-
-input {
-  padding: 5px;
-  font-size: 16px;
-}
-
-button {
-  padding: 5px 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-p {
-  margin-top: 10px;
-  color: green;
-}
 </style>
