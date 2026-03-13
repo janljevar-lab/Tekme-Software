@@ -47,7 +47,7 @@ export default defineComponent({
     ime.value = "";
     priimek.value = "";
 
-    window.location.reload(); // reload strani
+    window.location.reload();
   } catch (error) {
     console.error(error);
   }

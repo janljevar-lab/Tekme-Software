@@ -3,12 +3,7 @@
     <h2>Seznam igralcev</h2>
 
     <ul>
-      <li
-        v-for="Igralec in igralci"
-        :key="Igralec._id"
-        @click="izberiIgralca(Igralec._id)"
-        :style="{cursor:'pointer', background: izbranId === Igralec._id ? '#ddd' : ''}"
-      >
+      <li v-for="Igralec in igralci" :key="Igralec._id" @click="izberiIgralca(Igralec._id)" :class="{selected: izbranId === Igralec._id}">
         {{ Igralec.ime }} {{ Igralec.priimek }}
       </li>
     </ul>
@@ -19,7 +14,7 @@
       Izbriši izbranega igralca
     </button>
 
-    <p v-if="izbranId">
+    <p>
       Izbran ID: {{ izbranId }}
     </p>
 
@@ -36,37 +31,46 @@ export default defineComponent({
   setup() {
 
     const igralci = ref<any[]>([]);
-    const izbranId = ref<string | null>(null);
+    const izbranId = ref<any>(0);
 
     const naloziIgralce = async () => {
-      const res = await axios.get("http://localhost:6380/api/v1/igralci/igralci");
-      igralci.value = res.data;
+      try {
+        const res = await axios.get("http://localhost:6380/api/v1/igralci/igralci");
+        igralci.value = res.data;
+      } catch (err) {
+        console.error("Napaka pri nalaganju:", err);
+      }
     };
 
-    const izberiIgralca = (id:string) => {
-      izbranId.value = id;
+    const izberiIgralca = (id:any) => {
+
+      if(izbranId.value === id){
+        izbranId.value = 0;
+      }
+      else{
+        izbranId.value = id;
+      }
+
     };
 
     const izbrisiIgralca = async () => {
 
-      if(!izbranId.value){
+      if(izbranId.value === 0){
         alert("Najprej izberi igralca");
         return;
       }
 
-      try{
+      try {
 
         const link = `http://localhost:6380/api/v1/igralci/igralci/${izbranId.value}`;
-
-        console.log("DELETE LINK:", link);
 
         await axios.delete(link);
 
         igralci.value = igralci.value.filter(i => i._id !== izbranId.value);
 
-        izbranId.value = null;
+        izbranId.value = 0;
 
-      }catch(err){
+      } catch (err) {
         console.error("Napaka pri brisanju:", err);
       }
 
@@ -80,28 +84,12 @@ export default defineComponent({
       izberiIgralca,
       izbrisiIgralca
     };
+
   }
+
 });
 </script>
 
 <style scoped>
-
-ul{
-  list-style:none;
-  padding:0;
-}
-
-li{
-  padding:8px;
-  border-bottom:1px solid #ccc;
-}
-
-li:hover{
-  background:#eee;
-}
-
-button{
-  padding:8px 12px;
-}
 
 </style>
