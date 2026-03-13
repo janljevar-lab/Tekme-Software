@@ -2,11 +2,11 @@
   <div>
     <h2>Rezultati</h2>
 
-    <ul>
+    <ol>
       <li v-for="Igralec in sortedIgralci" :key="Igralec._id">
         {{ Igralec.ime }} {{ Igralec.priimek }} - {{ Igralec.točke }} pik
       </li>
-    </ul>
+    </ol>
 
   </div>
 </template>
