@@ -9,13 +9,8 @@
     </ul>
     <p>Igralec 1: {{ igralec1?.ime }} {{ igralec1?.priimek }}</p>
     <p>Igralec 2: {{ igralec2?.ime }} {{ igralec2?.priimek }}</p>
-    <button v-if="igralec1 && igralec2" @click="modalOdprto = true">Dodaj tekmo</button>
-    <PodatkiTekme 
-      v-if="modalOdprto" 
-      :igralec1="igralec1" 
-      :igralec2="igralec2"
-      @zapri="modalOdprto = false"
-    />
+    <button v-if="igralec1 && igralec2" @click="modalOdprto = true" style="position:sticky; bottom: 5px;">Dodaj tekmo</button>
+    <PodatkiTekme v-if="modalOdprto" :igralec1="igralec1" :igralec2="igralec2" @zapri="modalOdprto = false"/>
   </div>
 </template>
 
@@ -85,7 +80,7 @@ li {
   padding: 10px 15px;
   margin-bottom: 5px;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
 }
@@ -96,9 +91,14 @@ li:hover {
 }
 
 .selected {
-  background-color: #4caf50;
-  color: white;
+  background-color: #66a269;
+  color: rgb(85, 85, 85);
   font-weight: bold;
+}
+
+.selected:hover{
+  background-color: #687a69;
+  color: rgb(85, 85, 85);
 }
 
 h2 {

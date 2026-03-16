@@ -2,17 +2,16 @@
   <div>
     <h2>Rezultati</h2>
 
-    <ol>
-      <li v-for="Igralec in sortedIgralci" :key="Igralec._id">
+    <ol class="rezultati-list">
+      <li v-for="(Igralec, index) in sortedIgralci" :key="Igralec._id" :class="['igralec', medalClass(index)]">
+        <span class="rank">{{ index + 1 }}</span>
         {{ Igralec.ime }} {{ Igralec.priimek }} - {{ Igralec.točke }} pik
       </li>
     </ol>
-
   </div>
 </template>
 
 <script lang="ts">
-
 import { defineComponent, ref, onMounted, computed } from "vue";
 import axios from "axios";
 
@@ -20,7 +19,6 @@ export default defineComponent({
   name: "Tekme",
   setup() {
     const igralci = ref<any[]>([]);
-    const izbranId = ref<any>(0);
 
     const naloziIgralce = async () => {
       try {
@@ -31,39 +29,62 @@ export default defineComponent({
       }
     };
 
-    const izberiIgralca = (id: any) => {
-      izbranId.value = izbranId.value === id ? 0 : id;
-    };
-
-    const izbrisiIgralca = async () => {
-      if (izbranId.value === 0) {
-        alert("Najprej izberi igralca");
-        return;
-      }
-      try {
-        const link = `http://localhost:6380/api/v1/igralci/igralci/${izbranId.value}`;
-        await axios.delete(link);
-        igralci.value = igralci.value.filter(i => i._id !== izbranId.value);
-        izbranId.value = 0;
-      } catch (err) {
-        console.error("Napaka pri brisanju:", err);
-      }
-    };
-
     onMounted(naloziIgralce);
-
 
     const sortedIgralci = computed(() => {
       return [...igralci.value].sort((a, b) => b.točke - a.točke);
     });
 
-    return { igralci, sortedIgralci, izbranId };
+    const medalClass = (index: number) => {
+      if (index === 0) return 'zlata';
+      if (index === 1) return 'srebrna';
+      if (index === 2) return 'bronasta';
+      return '';
+    };
+
+    return { sortedIgralci, medalClass };
   }
 });
 </script>
 
 <style scoped>
-ul{
-    color: green;
+.rezultati-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.igralec {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.rank {
+  display: inline-block;
+  width: 30px;
+  font-weight: bold;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.zlata .rank {
+  font-size: 40px;
+  color: #FFD700;
+}
+
+.srebrna .rank {
+  font-size: 32px;
+  color: #C0C0C0;
+}
+
+.bronasta .rank {
+  font-size: 26px;
+  color: #CD7F32;
+}
+
+.zlata, .srebrna, .bronasta {
+  font-weight: bold;
 }
 </style>

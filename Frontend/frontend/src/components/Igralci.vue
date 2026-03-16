@@ -5,7 +5,7 @@
       <Seznam :igralci="igralci" @osvezi="naloziIgralce" />
 
       
-      <Dodajanje @osvezi="naloziIgralce" />
+      <Dodajanje @osvezi="naloziIgralce"/>
 
     </div>
   </div>

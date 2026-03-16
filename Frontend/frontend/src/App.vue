@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <h1>Glavni meni</h1>
+    <h1>Sports-Software</h1>
 
-    <div class="menu">
+    <div class="nav">
       <button 
         :class="{active: activeKomponent === 'igr'}"
         @click="izberiKomponent('igr')">
@@ -75,10 +75,44 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
 
 h1{
   font-family: "Times New Roman", Times, serif;
+}
+
+
+
+.nav {
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 15px;
+  background-color: #5883b8;
+}
+
+.nav button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2b4753;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.nav button:hover {
+  background-color: #b2d7f5;
+}
+
+.nav button:active {
+  transform: scale(0.96);
+}
+
+body{
+  background-color: #e4f4ff;
 }
 
 </style>

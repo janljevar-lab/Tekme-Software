@@ -84,9 +84,10 @@ input{
   box-sizing: border-box;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-
 .dodajanje-container {
-  max-width: 500px;
+  position: sticky;
+  top: 2px;
+  width: 500px;
   max-height: 600px;
   margin: 40px auto;
   padding: 25px;
@@ -141,13 +142,8 @@ button {
 }
 
 button:hover {
-  background-color: #1976d2;
+  background-color: #14c17c;
 }
 
-.sporocilo {
-  text-align: center;
-  margin-top: 15px;
-  color: #4caf50;
-  font-weight: bold;
-}
+
 </style>

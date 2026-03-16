@@ -58,7 +58,7 @@ ul {
 }
 
 li {
-  width: 100vw; /* zavzame celotno širino okna */
+  width: 98vw; /* zavzame celotno širino okna */
   box-sizing: border-box;
   padding: 12px 20px;
   margin-bottom: 2px;
