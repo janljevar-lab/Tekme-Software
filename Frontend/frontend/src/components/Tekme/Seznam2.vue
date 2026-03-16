@@ -3,11 +3,7 @@
     <h2>Seznam igralcev</h2>
     <SearchBar @filter="filtrirajIgralce" />
     <ul>
-      <li
-        v-for="igralec in filtriraniIgralci"
-        :key="igralec._id"
-        @click="izberiIgralca(igralec)"
-        :class="{ selected: izbraniIgralci.map(i => i._id).includes(igralec._id) }"
+      <li v-for="igralec in filtriraniIgralci" :key="igralec._id" @click="izberiIgralca(igralec)" :class="{ selected: izbraniIgralci.map(i => i._id).includes(igralec._id) }"
       >
         {{ igralec.ime }} {{ igralec.priimek }}
       </li>

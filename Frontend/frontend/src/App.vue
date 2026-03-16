@@ -20,6 +20,13 @@
         @click="izberiKomponent('stat')">
         Stats
       </button>
+
+      <button 
+        :class="{active: activeKomponent === 'stat'}"
+        @click="izberiKomponent('zgo')">
+        Zgodovina
+      </button>
+
     </div>
 
     <hr>
@@ -35,6 +42,7 @@ import { defineComponent, ref, computed } from "vue";
 import Igralci from "./components/Igralci.vue";
 import Tekme from "./components/Tekme.vue";
 import Stats from "./components/Stats.vue";
+import Zgodovina from "./components/Zgodovina.vue";
 
 export default defineComponent({
   name: "App",
@@ -47,7 +55,8 @@ export default defineComponent({
     const komponentMap: Record<string, any> = {
       'igr': Igralci,
       'tek': Tekme,
-      'stat': Stats
+      'stat': Stats,
+      'zgo' : Zgodovina
     };
 
     const izberiKomponent = (k: string) => {
