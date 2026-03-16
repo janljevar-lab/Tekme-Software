@@ -1,11 +1,13 @@
 <template>
   <div>
+    <div style="display: flex;">
+      
+      <Seznam :igralci="igralci" @osvezi="naloziIgralce" />
 
-    <Dodajanje @osvezi="naloziIgralce" />
+      
+      <Dodajanje @osvezi="naloziIgralce" />
 
-    <hr>
-
-    <Seznam :igralci="igralci" @osvezi="naloziIgralce" />
+    </div>
   </div>
 </template>
 
