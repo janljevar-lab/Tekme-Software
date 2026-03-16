@@ -16,22 +16,45 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import axios from "axios";
 
 export default defineComponent({
   name: "PodatkiTekme",
   props: { igralec1: { type: Object, required: true }, igralec2: { type: Object, required: true } },
-  setup(props) {
+  setup(props, { emit }) {
     const rezultat1 = ref<number | null>(null);
     const rezultat2 = ref<number | null>(null);
-    const shraniTekmo = () => {
-      console.log({
-        igralec1: props.igralec1,
-        rezultat1: rezultat1.value,
-        igralec2: props.igralec2,
-        rezultat2: rezultat2.value
-      });
-      alert("Tekma shranjena v konzolo!");
+
+    const shraniTekmo = async () => {
+      if (rezultat1.value === null || rezultat2.value === null) {
+        alert("Vnesi rezultate obeh igralcev!");
+        return;
+      }
+
+      try {
+        await axios.post("http://localhost:6380/api/v1/tekme/create", {
+          igralec1: props.igralec1._id,
+          rezultat1: rezultat1.value,
+          igralec2: props.igralec2._id,
+          rezultat2: rezultat2.value
+        });
+
+        await axios.put(`http://localhost:6380/api/v1/igralci/igralci/${props.igralec1._id}`,{
+            točke: rezultat1.value,
+        });
+
+        await axios.put(`http://localhost:6380/api/v1/igralci/igralci/${props.igralec2._id}`,{
+            točke: rezultat2.value,
+        });
+
+        emit("zapri");
+
+      } catch (err) {
+        console.error(err);
+        alert("Napaka pri shranjevanju tekme.");
+      }
     };
+
     return { rezultat1, rezultat2, shraniTekmo };
   }
 });
@@ -53,17 +76,16 @@ export default defineComponent({
   padding: 20px;
   border-radius: 10px;
   width: 300px;
-  z-index: 1001;
 }
 
-.modal input{
+.modal input {
   width: 100%;
   margin-bottom: 10px;
   padding: 5px;
   box-sizing: border-box;
 }
 
-button{
+button {
   margin-right: 5px;
 }
 </style>

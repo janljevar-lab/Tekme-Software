@@ -56,7 +56,7 @@ export const updateIgralec = async (req, res) => {
         const { ime, priimek, datumRojstva, drzava, točke } = req.body;
 
         const igralec = await Igralec.findOneAndUpdate(
-            { idNumber: id },
+            { _id: id },
             {
                 ime,
                 priimek,
