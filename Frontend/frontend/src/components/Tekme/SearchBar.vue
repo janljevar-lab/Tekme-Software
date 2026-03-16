@@ -4,7 +4,7 @@
       type="text" 
       placeholder="Išči igralca..."
       v-model="searchText"
-      @input="posljiFilter"
+      @input="pošljiFilter"
     />
   </div>
 </template>
@@ -32,5 +32,6 @@ input{
   padding: 5px;
   margin-bottom: 10px;
   width: 100%;
+  box-sizing: border-box;
 }
 </style>

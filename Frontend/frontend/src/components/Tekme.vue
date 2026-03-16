@@ -11,8 +11,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import Seznam from "./Tekme/Seznam.vue";
-import DodajTekmo from "./Tekme/SerchBar.vue";
+import Seznam from "./Tekme/Seznam2.vue";
+import DodajTekmo from "./Tekme/SearchBar.vue";
 import axios from "axios";
 
 export default defineComponent({
