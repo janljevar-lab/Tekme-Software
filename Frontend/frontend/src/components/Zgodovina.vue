@@ -1,17 +1,13 @@
 <template>
   <div>
-    <h2>Zgodovina vseh tekem</h2>
-
+    <h2>Vse Tekme</h2>
     <ul>
       <li v-for="tekma in tekme" :key="tekma._id">
-        {{ tekma.igralec1.ime }} {{ tekma.igralec1.priimek }}
-        vs
-        {{ tekma.igralec2.ime }} {{ tekma.igralec2.priimek }}
-        - Rezultat: {{ tekma.rezultat1 }} : {{ tekma.rezultat2 }}
+        {{ tekma.igralec1 }} : {{ tekma.igralec2 }} - {{ tekma.datum }}
       </li>
     </ul>
-
-    <p v-if="tekme.length === 0">Ni še nobene tekme.</p>
+    <p v-if="loading">Nalaganje...</p>
+    <p v-if="error">{{ error }}</p>
   </div>
 </template>
 
@@ -21,27 +17,32 @@ import axios from "axios";
 
 export default defineComponent({
   name: "Zgodovina",
-
   setup() {
     const tekme = ref<any[]>([]);
+    const loading = ref(false);
+    const error = ref<string | null>(null);
 
-    const naloziTekme = async () => {
+    const fetchTekme = async () => {
+      loading.value = true;
+      error.value = null;
       try {
-        const res = await axios.get("http://localhost:6380/api/v1/tekme/");
-        tekme.value = res.data;
-      } catch (err) {
-        console.error("Napaka pri nalaganju tekem:", err);
+        const response = await axios.get("http://localhost:6380/api/v1/tekme/all");
+        tekme.value = response.data; // predpostavimo, da API vrne array z igralec1, igralec2, datum
+      } catch (err: any) {
+        error.value = "Napaka pri pridobivanju tekem";
+        console.error(err);
+      } finally {
+        loading.value = false;
       }
     };
 
-    onMounted(naloziTekme);
+    onMounted(fetchTekme);
 
     return {
-      tekme
+      tekme,
+      loading,
+      error,
     };
-  }
+  },
 });
 </script>
-
-<style scoped>
-</style>

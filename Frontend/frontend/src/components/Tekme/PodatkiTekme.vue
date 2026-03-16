@@ -39,27 +39,25 @@ export default defineComponent({
           rezultat2: rezultat2.value
         });
 
-        if (rezultat1.value > rezultat2.value) {
+if (rezultat1.value > rezultat2.value) {
 
-            await axios.put(`http://localhost:6380/api/v1/igralci/igralci/${props.igralec1._id}`,{
-                točke: 21,
-            });
+    await axios.put(`http://localhost:6380/api/v1/igralci/igralci/${props.igralec1._id}`,{
+        točke: 21,
+    });
 
-            await axios.put(`http://localhost:6380/api/v1/igralci/igralci/${props.igralec2._id}`,{
-                točke: 21 - (rezultat1.value - rezultat2.value),
-            });
+    await axios.put(`http://localhost:6380/api/v1/igralci/igralci/${props.igralec2._id}`,{
+        točke: 21 - (rezultat1.value - rezultat2.value),
+    });
 
-        } else {
-            await axios.put(`http://localhost:6380/api/v1/igralci/igralci/${props.igralec2._id}`,{
-                točke: 21,
-            });
+} else {
+    await axios.put(`http://localhost:6380/api/v1/igralci/igralci/${props.igralec2._id}`,{
+        točke: 21,
+    });
 
-            await axios.put(`http://localhost:6380/api/v1/igralci/igralci/${props.igralec1._id}`,{
-                točke: 21 - (rezultat2.value - rezultat1.value),
-            });  
-        }
-
-
+    await axios.put(`http://localhost:6380/api/v1/igralci/igralci/${props.igralec1._id}`,{
+        točke: 21 - (rezultat2.value - rezultat1.value),
+    });  
+}
         emit("zapri");
 
       } catch (err) {
