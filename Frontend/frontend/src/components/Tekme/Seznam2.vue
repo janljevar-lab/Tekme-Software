@@ -3,7 +3,11 @@
     <h2>Seznam igralcev</h2>
     <SearchBar @filter="filtrirajIgralce" />
     <ul>
-      <li v-for="igralec in filtriraniIgralci" :key="igralec._id" @click="izberiIgralca(igralec)" :class="{ selected: izbraniIgralci.map(i => i._id).includes(igralec._id) }"
+      <li 
+        v-for="igralec in filtriraniIgralci" 
+        :key="igralec._id" 
+        @click="izberiIgralca(igralec)" 
+        :class="{ selected: izbraniIgralci.map(i => i._id).includes(igralec._id) }"
       >
         {{ igralec.ime }} {{ igralec.priimek }}
       </li>
@@ -74,4 +78,59 @@ export default defineComponent({
 
 <style>
 
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-width: 400px;
+}
+
+li {
+  font-size: 150%;
+  padding: 10px 15px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+
+li:hover {
+  background-color: #f0f0f0;
+}
+
+.selected {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+p {
+  margin: 5px 0;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  font-size: 35px;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #1976d2;
+}
 </style>

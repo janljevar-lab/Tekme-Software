@@ -1,25 +1,24 @@
 <template>
-  <div>
+  <div class="dodajanje-container">
     <h2>Dodaj novega igralca</h2>
 
-    <form @submit.prevent="dodajIgralca">
-
-      <div>
+    <form @submit.prevent="dodajIgralca" class="dodajanje-form">
+      <div class="form-group">
         <label for="ime">Ime:</label>
         <input type="text" id="ime" v-model="ime" required />
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="priimek">Priimek:</label>
         <input type="text" id="priimek" v-model="priimek" required />
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="drzava">Država:</label>
         <input type="text" id="drzava" v-model="država" />
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="datum">Datum rojstva:</label>
         <input type="date" id="datum" v-model="datumRojstva" />
       </div>
@@ -27,7 +26,7 @@
       <button type="submit">Dodaj</button>
     </form>
 
-    <p v-if="sporocilo">{{ sporocilo }}</p>
+    <p class="sporocilo" v-if="sporocilo">{{ sporocilo }}</p>
   </div>
 </template>
 
@@ -37,7 +36,6 @@ import axios from "axios";
 
 export default defineComponent({
   name: "Dodajanje",
-
   setup() {
     const ime = ref("");
     const priimek = ref("");
@@ -56,15 +54,11 @@ export default defineComponent({
             datumRojstva: datumRojstva.value ? new Date(datumRojstva.value) : null
           }
         );
-
-        // Po uspehu počisti polja in prikaži sporočilo
         ime.value = "";
         priimek.value = "";
         država.value = "";
         datumRojstva.value = "";
         sporocilo.value = "Igralec uspešno dodan!";
-
-        // Opcijsko: osveži seznam igralcev
         window.location.reload();
       } catch (error: any) {
         console.error(error);
@@ -72,17 +66,73 @@ export default defineComponent({
       }
     };
 
-    return {
-      ime,
-      priimek,
-      država,
-      datumRojstva,
-      sporocilo,
-      dodajIgralca
-    };
+    return { ime, priimek, država, datumRojstva, sporocilo, dodajIgralca };
   }
 });
 </script>
 
 <style scoped>
+.dodajanje-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.dodajanje-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2196f3;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #1976d2;
+}
+
+.sporocilo {
+  text-align: center;
+  margin-top: 15px;
+  color: #4caf50;
+  font-weight: bold;
+}
 </style>
