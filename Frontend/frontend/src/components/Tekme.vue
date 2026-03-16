@@ -10,6 +10,7 @@
 </template>
 
 <script lang="ts">
+
 import { defineComponent, ref, onMounted } from "vue";
 import Seznam from "./Tekme/Seznam2.vue";
 import DodajTekmo from "./Tekme/SearchBar.vue";
@@ -38,7 +39,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
 ul{
     color: red;
 }
+
 </style>

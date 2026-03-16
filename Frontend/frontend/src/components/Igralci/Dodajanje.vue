@@ -3,6 +3,7 @@
     <h2>Dodaj novega igralca</h2>
 
     <form @submit.prevent="dodajIgralca" class="dodajanje-form">
+
       <div class="form-group">
         <label for="ime">Ime:</label>
         <input type="text" id="ime" v-model="ime" required />
@@ -72,8 +73,21 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+input{
+  width: 100%;
+  padding: 10px 12px;
+  margin: 6px 0 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
 .dodajanje-container {
   max-width: 500px;
+  max-height: 600px;
   margin: 40px auto;
   padding: 25px;
   background-color: #f9f9f9;
@@ -92,6 +106,7 @@ h2 {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+  height: 100px;
 }
 
 label {

@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts">
+
 import { defineComponent, ref, onMounted } from "vue";
 import Seznam from "./Igralci/Seznam.vue";
 import Dodajanje from "./Igralci/Dodajanje.vue";

@@ -38,6 +38,7 @@
 </template>
 
 <script lang="ts">
+
 import { defineComponent, ref, computed } from "vue";
 import Igralci from "./components/Igralci.vue";
 import Tekme from "./components/Tekme.vue";
@@ -75,7 +76,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
 h1{
   font-family: "Times New Roman", Times, serif;
 }
+
 </style>
