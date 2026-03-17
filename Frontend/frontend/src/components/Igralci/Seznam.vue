@@ -16,7 +16,7 @@
 
     <br>
 
-    <button @click="izbrisiIgralca" style="position:sticky; bottom:5px">
+    <button @click="izbrisiIgralca" style="position:sticky; bottom:5px; font-size: 30px;">
       Izbriši izbranega igralca
     </button>
 

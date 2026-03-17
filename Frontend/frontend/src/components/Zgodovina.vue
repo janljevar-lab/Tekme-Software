@@ -80,7 +80,7 @@ ul {
 }
 
 li {
-  width: 98vw;
+  width: 97vw;
   box-sizing: border-box;
   padding: 12px 20px;
   margin-bottom: 2px;

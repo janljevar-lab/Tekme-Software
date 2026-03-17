@@ -9,7 +9,7 @@
     </ul>
     <p>Igralec 1: {{ igralec1?.ime }} {{ igralec1?.priimek }}</p>
     <p>Igralec 2: {{ igralec2?.ime }} {{ igralec2?.priimek }}</p>
-    <button v-if="igralec1 && igralec2" @click="modalOdprto = true" style="position:sticky; bottom: 5px;">Dodaj tekmo</button>
+    <button v-if="igralec1 && igralec2" @click="modalOdprto = true" style="position:sticky; bottom: 5px; font-size: 30px;">Dodaj tekmo</button>
     <PodatkiTekme v-if="modalOdprto" :igralec1="igralec1" :igralec2="igralec2" @zapri="modalOdprto = false"/>
   </div>
 </template>
