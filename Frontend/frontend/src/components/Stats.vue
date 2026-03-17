@@ -62,7 +62,7 @@ export default defineComponent({
 }
 
 .rank {
-  display: inline-block;
+  display: inline-lock;
   width: 30px;
   font-weight: bold;
   margin-right: 10px;
@@ -72,16 +72,19 @@ export default defineComponent({
 .zlata .rank {
   font-size: 40px;
   color: #FFD700;
+  background-color: #CD7F32;
 }
 
 .srebrna .rank {
   font-size: 32px;
   color: #C0C0C0;
+  background-color: #444;
 }
 
 .bronasta .rank {
   font-size: 26px;
   color: #CD7F32;
+  background-color: #81501f;
 }
 
 .zlata, .srebrna, .bronasta {
