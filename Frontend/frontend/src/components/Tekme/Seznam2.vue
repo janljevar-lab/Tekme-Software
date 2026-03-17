@@ -24,6 +24,7 @@ export default defineComponent({
   name: "SeznamIgralcev",
   components: { SearchBar, PodatkiTekme },
   setup() {
+    
     const igralci = ref<any[]>([]);
     const searchQuery = ref("");
     const izbraniIgralci = ref<any[]>([]);

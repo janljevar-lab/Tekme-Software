@@ -3,10 +3,16 @@
     <h2>Seznam igralcev</h2>
 
     <ul>
-      <li v-for="Igralec in igralci" :key="Igralec._id" @click="izberiIgralca(Igralec._id)" :class="{selected: izbranId === Igralec._id}">
+      <li v-for="Igralec in paginatedIgralci" :key="Igralec._id" @click="izberiIgralca(Igralec._id)" :class="{selected: izbranId === Igralec._id}">
         {{ Igralec.ime }} {{ Igralec.priimek }}
       </li>
     </ul>
+
+    <div style="padding-left: 60%;">
+      <button @click="prevPage" :disabled="page === 1"> &lt; </button>
+      <span> {{ page }} / {{ totalPages }} </span>
+      <button @click="nextPage" :disabled="page === totalPages"> &gt; </button>
+    </div>
 
     <br>
 
@@ -22,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 import axios from "axios";
 
 export default defineComponent({
@@ -32,6 +38,30 @@ export default defineComponent({
 
     const igralci = ref<any[]>([]);
     const izbranId = ref<any>(0);
+
+    const page = ref(1);
+    const perPage = 20;
+
+    const totalPages = computed(() => {
+      return Math.ceil(igralci.value.length / perPage);
+    });
+
+    const paginatedIgralci = computed(() => {
+      const start = (page.value - 1) * perPage;
+      return igralci.value.slice(start, start + perPage);
+    });
+
+    const nextPage = () => {
+      if(page.value < totalPages.value){
+        page.value++;
+      }
+    };
+
+    const prevPage = () => {
+      if(page.value > 1){
+        page.value--;
+      }
+    };
 
     const naloziIgralce = async () => {
       try {
@@ -82,7 +112,12 @@ export default defineComponent({
       igralci,
       izbranId,
       izberiIgralca,
-      izbrisiIgralca
+      izbrisiIgralca,
+      page,
+      totalPages,
+      paginatedIgralci,
+      nextPage,
+      prevPage
     };
 
   }

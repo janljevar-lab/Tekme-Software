@@ -86,7 +86,7 @@ input{
 }
 .dodajanje-container {
   position: sticky;
-  top: 2px;
+  top: 40px;
   width: 500px;
   max-height: 600px;
   margin: 40px auto;
