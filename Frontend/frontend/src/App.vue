@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Sports-Software</h1>
+    <h1> <img src="./assets/logo.png" alt="logo" height="50px"> Sports-Software</h1>
 
     <div class="nav">
       <button 
