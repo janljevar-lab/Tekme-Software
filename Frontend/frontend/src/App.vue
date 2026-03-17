@@ -37,7 +37,9 @@
   </div>
 </template>
 
+
 <script lang="ts">
+
 
 import { defineComponent, ref, computed } from "vue";
 import Igralci from "./components/Igralci.vue";
@@ -45,9 +47,12 @@ import Tekme from "./components/Tekme.vue";
 import Stats from "./components/Stats.vue";
 import Zgodovina from "./components/Zgodovina.vue";
 
+
 export default defineComponent({
+  
   name: "App",
   components: { Igralci, Tekme, Stats },
+
 
   setup() {
 
@@ -73,14 +78,15 @@ export default defineComponent({
     };
   }
 });
+
 </script>
+
 
 <style>
 
 h1{
   font-family: "Times New Roman", Times, serif;
 }
-
 
 
 .nav {
@@ -91,6 +97,7 @@ h1{
   padding: 15px;
   background-color: #5883b8;
 }
+
 
 .nav button {
   padding: 10px 18px;
@@ -103,16 +110,21 @@ h1{
   transition: background-color 0.2s, transform 0.1s;
 }
 
+
 .nav button:hover {
   background-color: #b2d7f5;
 }
+
 
 .nav button:active {
   transform: scale(0.96);
 }
 
+
+
 body{
   background-color: #e4f4ff;
 }
+
 
 </style>
